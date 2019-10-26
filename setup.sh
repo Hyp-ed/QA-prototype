@@ -6,13 +6,15 @@ else
   echo "Installing CMake..."
   curl -L "https://github.com/Kitware/CMake/releases/download/v3.16.0-rc2/cmake-3.16.0-rc2.tar.gz" > "cmake-3.16.0-rc2.tar.gz"
   tar xzf cmake-3.16.0-rc2.tar.gz
-  ./cmake-3.16.0-rc2/bootstrap
-  make -C cmake-3.16.0-rc2
-  make -C cmake-3.16.0-rc2 install
+  cd cmake-3.16.0-rc2.tar.gz
+  ./bootstrap
+  make
+  sudo make install
 fi
 
 echo "Installing Google Test..."
 
+cd ..
 git clone https://github.com/google/googletest.git
 
 cd googletest && mkdir build && cd build
