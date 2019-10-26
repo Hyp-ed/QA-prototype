@@ -8,17 +8,17 @@ addons:
     packages: [g++-4.8]
   
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y libgtest-dev cmake
-  - sudo wget https://github.com/google/googletest/archive/release-1.10.0.tar.gz
-  - sudo tar xf release-1.10.0.tar.gz
-  - cd googletest-release-1.10.0
-  - sudo mkdir build
-  - cd build
-  - sudo cmake DCMAKE_CXX_COMPILER="c++" -DCMAKE_CXX_FLAGS="-std=c++11 -stdlib=libc++" ..
-  - sudo make 
-  - sudo make install
-  - cd "${TRAVIS_BUILD_DIR}"
-script: "make && ./hyped"
+- sudo apt-get -qq update
+- sudo apt-get install -y libgtest-dev cmake
+- sudo wget https://github.com/google/googletest/archive/release-1.7.0.tar.gz
+- sudo tar xf release-1.7.0.tar.gz
+- cd googletest-release-1.7.0
+- sudo cmake -DBUILD_SHARED_LIBS=ON .
+- sudo make
+- sudo cp -a include/gtest /usr/include
+- sudo cp -a libgtest_main.so libgtest.so /usr/lib/
+- cd "${TRAVIS_BUILD_DIR}"
+- make 
+script: "./hyped"
 rvm:
   - 9.00
