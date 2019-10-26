@@ -13,11 +13,11 @@ before_install:
   - sudo wget https://github.com/google/googletest/archive/release-1.10.0.tar.gz
   - sudo tar xf release-1.10.0.tar.gz
   - cd googletest-release-1.10.0
-  - mkdir build
+  - sudo mkdir build
   - cd build
-  - cmake DCMAKE_CXX_COMPILER="c++" -DCMAKE_CXX_FLAGS="-std=c++11 -stdlib=libc++" ..
-  - make 
-  - make install
+  - sudo cmake DCMAKE_CXX_COMPILER="c++" -DCMAKE_CXX_FLAGS="-std=c++11 -stdlib=libc++" ..
+  - sudo make 
+  - sudo make install
   - cd "${TRAVIS_BUILD_DIR}"
 script: "make && ./hyped"
 rvm:
