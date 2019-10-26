@@ -1,0 +1,10 @@
+language: cpp
+compiler: gcc
+os: osx
+before_install:
+  - sudo chmod u+x setup.sh
+  - ./setup.sh
+  - cd "${TRAVIS_BUILD_DIR}"
+script: "make && ./hyped"
+rvm:
+  - 9.00
