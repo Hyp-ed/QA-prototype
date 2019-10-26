@@ -4,7 +4,7 @@ if cmake --version | grep -q 'cmake version'; then
   echo "CMake installed."
 else
   echo "Installing CMake..."
-  wget https://github.com/Kitware/CMake/releases/download/v3.16.0-rc2/cmake-3.16.0-rc2.tar.gz
+  curl -L "https://github.com/Kitware/CMake/releases/download/v3.16.0-rc2/cmake-3.16.0-rc2.tar.gz" > "cmake-3.16.0-rc2.tar.gz"
   tar xzf cmake-3.16.0-rc2.tar.gz
   ./cmake-3.16.0-rc2/bootstrap
   make -C cmake-3.16.0-rc2
