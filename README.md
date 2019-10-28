@@ -1,4 +1,6 @@
 # QA-prototype
+![Travis Status](https://travis-ci.org/Hyp-ed/QA-prototype.svg?branch=master)
+
 To try stuff that could work for Quality Assurance team.
 
 The repo does not need to adhere to any coding standard and can be a mix of styles/structures/languages/documents.
