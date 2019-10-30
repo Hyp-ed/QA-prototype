@@ -7,4 +7,5 @@ SRCS := \
   utils/concurrent/condition_variable.cpp \
   utils/concurrent/lock.cpp \
   utils/logger.cpp \
-  rectangle/rectangle.cpp \
+  rectangle/rectangle.test.cpp \
+  circle/circle.test.cpp \

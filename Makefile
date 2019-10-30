@@ -9,9 +9,10 @@ OBJS_DIR:=bin
 
 GOOGLE_TEST_LIBS = -lgtest -lgtest_main
 GOOGLE_TEST_INCLUDE = /usr/local/include
+COVERAGE=-Wall -g -fprofile-arcs -ftest-coverage
 
 
-CFLAGS:= -pthread -std=c++11 -O2 -Wall -Wno-unused-result
+CFLAGS:= -pthread -std=c++11 -O2 -Wall  -Wno-unused-result  
 LFLAGS:= ${GOOGLE_TEST_LIBS}
 
 CC:="g++"
@@ -22,9 +23,11 @@ $(error compiler $(CC) is not installed)
 endif
 LL:=$(CC)
 
+include $(SRCS_DIR)/Source.files 
 
-include $(SRCS_DIR)/Source.files
 
+TEST_OBJS := $(SRCS:.cpp=.o)
+INC_TEST_DIR := -I$(SRCS_DIR) -I$(LIBS_DIR)/eigen-git-mirror
 
 SRCS := $(SRCS) $(MAIN)
 OBJS := $(SRCS:.cpp=.o)
@@ -35,7 +38,6 @@ OBJS := $(patsubst %,$(OBJS_DIR)/%,$(OBJS))
 DEP_DIR := $(OBJS_DIR)
 DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.d
 INC_DIR := -I$(SRCS_DIR) -I$(LIBS_DIR)/eigen-git-mirror
-
 # run "make VERBOSE=1" to see all commands
 ifndef VERBOSE
 	Verb := @
@@ -44,16 +46,22 @@ Echo := $(Verb)echo
 
 default: $(TARGET)
 
-$(TARGET): $(OBJS)
+test: $(TEST_TARGET)
+
+$(TEST_TARGET): $(OBJS) $(TEST_OBJS)
 	$(Echo) "Linking executable $(MAIN) into $@"
 	$(Verb) $(LL) $(LFLAGS) -o $@ $(OBJS)
+
+$(TARGET): $(OBJS)
+	$(Echo) "Linking executable $(MAIN) into $@"
+	$(Verb) $(LL)  $(LFLAGS) -o $@ $(OBJS) ${COVERAGE}
 	# $(Verb) $(LL)  -o $@ $(OBJS)
 
 
 $(OBJS): $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.cpp
 	$(Echo) "Compiling $<"
 	$(Verb) mkdir -p $(dir $@)
-	$(Verb) $(CC) $(DEPFLAGS) $(CFLAGS) -o $@ -c $(INC_DIR) $<
+	$(Verb) $(CC) $(DEPFLAGS) $(CFLAGS) -o $@ -c $(INC_DIR) $< ${COVERAGE}
 
 
 clean:
@@ -74,5 +82,7 @@ info:
 #	$(call echo_var,MAINS)
 	$(call echo_var,UNAME)
 	$(call echo_var,CFLAGS)
+	$(call echo_var,COVERAGE)
+
 
 -include $(OBJS:.o=.d)
